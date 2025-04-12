@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1061764827233",
+    "project_id": "microdrama-llama",
+    "storage_bucket": "microdrama-llama.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061764827233:android:f47f93d0a96f24ba940220",
+        "android_client_info": {
+          "package_name": "com.joewhocodes.microdramallama1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061764827233-p11oi2ncp3kvjq8n1unct3jmv2m2ospd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.joewhocodes.microdramallama1",
+            "certificate_hash": "d4411fd70a63b751639764868da69d5d333969a0"
+          }
+        },
+        {
+          "client_id": "1061764827233-q1vnh1sbmu1ce7cc95gsrkij445ovrdp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPQczVsk3F-G2l5vgIwAMUd5ZbQ2K3jyg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1061764827233-q1vnh1sbmu1ce7cc95gsrkij445ovrdp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1061764827233-1ve3amv95ufv8njteesfbv645fclsfe7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.joewhocodes.microdrama-llama"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
