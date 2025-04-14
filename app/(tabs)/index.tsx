@@ -1,8 +1,18 @@
 import { useAuth } from '@/hooks/useAuth'
 import { router } from 'expo-router'
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
 export default function HomeScreen() {
+	const categories = [
+		'Trending Now',
+		'Top Picks for You',
+		'Action',
+		'Comedy',
+		'Romance',
+		'Horror',
+		'Documentaries',
+	]
+
 	const { user, signOut } = useAuth()
 
 	const handleSignOut = async () => {
@@ -10,27 +20,66 @@ export default function HomeScreen() {
 		router.replace('/welcome')
 	}
 
+	const movieData = [
+		{
+			id: 1,
+			title: 'Movie 1',
+			image: 'https://images.unsplash.com/photo-1571771045145-fbf3b6be3b68',
+		},
+		{
+			id: 2,
+			title: 'Movie 2',
+			image: 'https://images.unsplash.com/photo-1602107124398-d2f0ffdbbeea',
+		},
+		{
+			id: 3,
+			title: 'Movie 3',
+			image: 'https://images.unsplash.com/photo-1516972810927-2dbd3e6e02c4',
+		},
+	]
+
 	return (
-		<SafeAreaView>
-			<Text className='text-right bg-red-600'>HEy</Text>
-			<TouchableOpacity
-				onPress={handleSignOut}
-				className='bg-red-600 p-4'
-			>
-				<Text>Sign Out!</Text>
-			</TouchableOpacity>
-			<View className='p-4'>
-				<Text>{user?.user.email}</Text>
-				<Text>{user?.user.name}</Text>
-				<Text>{user?.user.photo}</Text>
-			</View>
-			<View>
-				{user ? (
-					<Text>User is signed in</Text>
-				) : (
-					<Text>User is not signed in</Text>
-				)}
-			</View>
-		</SafeAreaView>
+		<ScrollView className='bg-black'>
+			{/* Top Banner */}
+			{/* <View className='relative h-56'>
+				<Image
+					source={{ uri: 'https://via.placeholder.com/500x300' }}
+					className='w-full h-full object-cover'
+				/>
+				<View className='absolute bottom-4 left-4'>
+					<Text className='text-white text-3xl font-bold'>
+						Featured Movie
+					</Text>
+				</View>
+			</View> */}
+
+			{/* Categories Section */}
+			{categories.map((category, index) => (
+				<View key={index} className='mt-8 px-4'>
+					<Text className='text-white text-xl font-semibold'>
+						{category}
+					</Text>
+
+					{/* Movie Grid */}
+					<ScrollView
+						horizontal
+						showsHorizontalScrollIndicator={false}
+						className='mt-4'
+					>
+						{movieData.map(movie => (
+							<TouchableOpacity key={movie.id} className='mr-4'>
+								<Image
+									source={{ uri: movie.image }}
+									className='w-40 h-60 rounded-md'
+								/>
+								<Text className='text-white text-sm mt-2'>
+									{movie.title}
+								</Text>
+							</TouchableOpacity>
+						))}
+					</ScrollView>
+				</View>
+			))}
+		</ScrollView>
 	)
 }

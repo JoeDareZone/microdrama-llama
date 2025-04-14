@@ -22,7 +22,7 @@ export const useAuth = () => {
 
 		// return unsubscribe
 		const checkSignedIn = async () => {
-			const currentUser = await GoogleSignin.getCurrentUser()
+			const currentUser = GoogleSignin.getCurrentUser()
 			if (currentUser) {
 				setUser(currentUser)
 				setLoading(false)
@@ -48,11 +48,6 @@ export const useAuth = () => {
 			console.log(error)
 		}
 	}
-
-	useEffect(() => {
-		console.log('firing useEffect')
-		console.log(user)
-	}, [user])
 
 	// const signIn = async () => {
 	// 	try {
