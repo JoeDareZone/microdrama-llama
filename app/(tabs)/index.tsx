@@ -1,13 +1,14 @@
 import {
 	GoogleSignin,
 	isSuccessResponse,
+	User,
 } from '@react-native-google-signin/google-signin'
 import { useEffect, useState } from 'react'
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 
 export default function HomeScreen() {
 	const [error, setError] = useState({})
-
+	const [user, setUser] = useState<User | null>(null)
 	let statusCodes
 
 	useEffect(() => {
@@ -19,8 +20,9 @@ export default function HomeScreen() {
 			await GoogleSignin.hasPlayServices()
 			const response = await GoogleSignin.signIn()
 			if (isSuccessResponse(response)) {
-				setError({ userInfo: response.data })
+				setUser(response.data)
 			} else {
+				console.log('sign in was cancelled by user')
 				// sign in was cancelled by user
 			}
 		} catch (error) {
@@ -28,31 +30,36 @@ export default function HomeScreen() {
 		}
 	}
 
+	const signOut = async () => {
+		try {
+			await GoogleSignin.signOut()
+			setUser(null)
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
 	return (
 		<SafeAreaView>
 			<Text className='text-right bg-red-600'>HEy</Text>
-      <TouchableOpacity onPress={signIn}>
-        <Text>Sign In!</Text>
-      </TouchableOpacity>
+			<TouchableOpacity onPress={signIn} className='bg-green-600 p-4'>
+				<Text>Sign In!</Text>
+			</TouchableOpacity>
+			<TouchableOpacity onPress={signOut} className='bg-red-600 p-4'>
+				<Text>Sign Out!</Text>
+			</TouchableOpacity>
+			<View className='p-4'>
+				<Text>{user?.user.email}</Text>
+				<Text>{user?.user.name}</Text>
+				<Text>{user?.user.photo}</Text>
+			</View>
+			<View>
+				{user ? (
+					<Text>User is signed in</Text>
+				) : (
+					<Text>User is not signed in</Text>
+				)}
+			</View>
 		</SafeAreaView>
 	)
 }
-
-const styles = StyleSheet.create({
-	titleContainer: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		gap: 8,
-	},
-	stepContainer: {
-		gap: 8,
-		marginBottom: 8,
-	},
-	reactLogo: {
-		height: 178,
-		width: 290,
-		bottom: 0,
-		left: 0,
-		position: 'absolute',
-	},
-})
