@@ -15,6 +15,8 @@ export default function MovieScreen() {
 	const router = useRouter()
 	const [showOptions, setShowOptions] = useState(false)
 	const spendCoins = useCurrencyStore(state => state.spendCoins)
+	const canAfford = (cost: number) =>
+		useCurrencyStore.getState().coins >= cost
 
 	useEffect(() => {
 		if (id) addToPath(id)
@@ -24,13 +26,15 @@ export default function MovieScreen() {
 	const player = useVideoPlayer(storyNode.videoUrl, player => player.play())
 
 	const handleChoice = (nextId: string, cost?: number) => {
-		const success = cost ? spendCoins(cost) : true
-		if (success) {
-			setShowOptions(false)
-			router.push(`/movie/${nextId}`)
-		} else {
+		if (cost && !canAfford(cost)) {
 			alert('Not enough coins!')
+			return
 		}
+
+		if (cost) spendCoins(cost)
+
+		setShowOptions(false)
+		router.push(`/movie/${nextId}`)
 	}
 
 	useEffect(() => {

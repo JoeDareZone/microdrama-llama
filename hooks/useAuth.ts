@@ -38,7 +38,6 @@ export const useAuth = () => {
 			await GoogleSignin.hasPlayServices()
 			const response = await GoogleSignin.signIn()
 			if (isSuccessResponse(response)) {
-				console.log('sign in successful')
 				setUser(response.data)
 			} else {
 				console.log('sign in was cancelled by user')
