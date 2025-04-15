@@ -3,12 +3,13 @@ import { IconSymbol } from '@/components/ui/IconSymbol'
 import { Colors } from '@/constants/Colors'
 import { useCurrencyStore } from '@/stores/useCurrencyStore'
 import { usePathStore } from '@/stores/usePathStore'
+import { getStoryNode } from '@/stories/storyMap'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useVideoPlayer, VideoView } from 'expo-video'
 import React, { useEffect, useState } from 'react'
 import { Pressable, Text, View } from 'react-native'
 import Animated, { FadeInDown, ZoomIn } from 'react-native-reanimated'
-import { getStoryNode } from '../stories/storyMap'
+
 type Params = { id: string }
 
 export default function MovieScreen() {

@@ -13,13 +13,15 @@ export const useAuth = () => {
 				'1061764827233-q1vnh1sbmu1ce7cc95gsrkij445ovrdp.apps.googleusercontent.com',
 		})
 
-		auth().onAuthStateChanged(userState => {
+		const subscriber = auth().onAuthStateChanged(userState => {
 			setUser(userState)
 
 			if (loading) {
 				setLoading(false)
 			}
 		})
+
+		return subscriber
 	}, [])
 
 	const signIn = async () => {
@@ -38,6 +40,7 @@ export const useAuth = () => {
 	const signOut = async () => {
 		try {
 			await GoogleSignin.signOut()
+			auth().signOut()
 			setUser(null)
 		} catch (error) {
 			console.error(error)
