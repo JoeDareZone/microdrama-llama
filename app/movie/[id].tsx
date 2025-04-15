@@ -1,8 +1,7 @@
-import { useEvent } from 'expo'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useVideoPlayer, VideoView } from 'expo-video'
 import React, { useEffect, useState } from 'react'
-import { Button, Pressable, Text, View } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 
 type Params = {
 	id: string
@@ -23,37 +22,25 @@ export default function MovieScreen() {
 
 	const currentVideo = videoMap[id] || videoMap['1']
 
-	const videoSource =
-		'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+	const videoSource = require('../../assets/videos/work.mp4')
 
 	const player = useVideoPlayer(videoSource, player => {
 		player.play()
 	})
 
-	// Listen for video end
-	useEvent(player, 'playToEnd')
-
-	// Add an effect to watch   for status changes to detect end of playback
 	useEffect(() => {
-		const checkStatus = () => {
-			// Check if video has finished
-			if (
-				player &&
-				player.currentTime >= player.duration &&
-				player.duration > 0
-			) {
-				setShowOptions(true)
-			}
+		if (!player) return
+
+		const onEnd = () => {
+			setShowOptions(true)
 		}
 
-		// Set up interval to check video status
-		const intervalId = setInterval(checkStatus, 1000)
-		return () => clearInterval(intervalId)
-	}, [player])
+		player.addListener('playToEnd', onEnd)
 
-	const { isPlaying } = useEvent(player, 'playingChange', {
-		isPlaying: player.playing,
-	})
+		return () => {
+			player.removeListener('playToEnd', onEnd)
+		}
+	}, [player])
 
 	const handleChoice = (nextId: string) => {
 		router.push(`/movie/${nextId}`)
@@ -61,45 +48,36 @@ export default function MovieScreen() {
 
 	return (
 		<View className='flex-1 bg-black justify-center items-center'>
-			<VideoView
-				style={{ height: '100%', width: '100%' }}
-				player={player}
-				allowsFullscreen
-				allowsPictureInPicture
-			/>
-			<View className='p-6 space-y-4 w-full'>
-				<Button
-					title={isPlaying ? 'Pause' : 'Play'}
-					onPress={() => {
-						if (isPlaying) {
-							player.pause()
-						} else {
-							player.play()
-						}
-					}}
+			<View className='relative w-full h-full'>
+				<VideoView
+					style={{ height: '100%', width: '100%' }}
+					player={player}
+					allowsFullscreen
+					allowsPictureInPicture
 				/>
-			</View>
-			{showOptions && (
-				<View className='p-6 space-y-4 w-full'>
-					<Pressable
-						className='bg-white py-4 rounded-2xl items-center'
-						onPress={() => handleChoice('2')}
-					>
-						<Text className='text-black text-lg font-semibold'>
-							Option A
-						</Text>
-					</Pressable>
 
-					<Pressable
-						className='bg-white py-4 rounded-2xl items-center'
-						onPress={() => handleChoice('3')}
-					>
-						<Text className='text-black text-lg font-semibold'>
-							Option B
-						</Text>
-					</Pressable>
-				</View>
-			)}
+				{showOptions && (
+					<View className='absolute bottom-12 left-0 right-0 p-6 gap-x-10 w-full flex-row justify-center'>
+						<Pressable
+							className='bg-white py-10 px-16 rounded-2xl items-center'
+							onPress={() => handleChoice('2')}
+						>
+							<Text className='text-black text-lg font-semibold'>
+								Option A
+							</Text>
+						</Pressable>
+
+						<Pressable
+							className='bg-white py-10 px-16 rounded-2xl items-center'
+							onPress={() => handleChoice('3')}
+						>
+							<Text className='text-black text-lg font-semibold'>
+								Option B
+							</Text>
+						</Pressable>
+					</View>
+				)}
+			</View>
 		</View>
 	)
 }
