@@ -1,6 +1,8 @@
 import CurrencyBar from '@/components/CurrencyBar'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { Colors } from '@/constants/Colors'
+import { useAuth } from '@/hooks/useAuth'
+import { addUserCoins, spendUserCoins } from '@/services/currencyService'
 import { useCurrencyStore } from '@/stores/useCurrencyStore'
 import { usePathStore } from '@/stores/usePathStore'
 import { getStoryNode } from '@/stories/storyMap'
@@ -17,10 +19,9 @@ export default function MovieScreen() {
 	const { addToPath } = usePathStore()
 	const router = useRouter()
 	const [showOptions, setShowOptions] = useState(false)
-	const spendCoins = useCurrencyStore(state => state.spendCoins)
-	const addCoins = useCurrencyStore(state => state.addCoins)
 	const canAfford = (cost: number) =>
 		useCurrencyStore.getState().coins >= cost
+	const user = useAuth()
 
 	useEffect(() => {
 		if (id) addToPath(id)
@@ -35,7 +36,7 @@ export default function MovieScreen() {
 			return
 		}
 
-		if (cost) spendCoins(cost)
+		if (cost) spendUserCoins(user.user?.uid ?? '', cost)
 
 		setShowOptions(false)
 		router.push(`/movie/${nextId}`)
@@ -47,7 +48,7 @@ export default function MovieScreen() {
 		const onEnd = () => {
 			setShowOptions(true)
 			if (storyNode.isEnd) {
-				addCoins(10)
+				addUserCoins(user.user?.uid ?? '', 10)
 			}
 		}
 

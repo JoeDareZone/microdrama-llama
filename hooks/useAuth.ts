@@ -1,7 +1,9 @@
 // import { auth } from '@/app/firebase/config'
+import { getUserCoins } from '@/services/currencyService'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { useEffect, useState } from 'react'
+import { createUser } from './useFirestore'
 
 export const useAuth = () => {
 	const [loading, setLoading] = useState(true)
@@ -31,7 +33,11 @@ export const useAuth = () => {
 			const googleCredential = auth.GoogleAuthProvider.credential(
 				response.data?.idToken || null
 			)
-			await auth().signInWithCredential(googleCredential)
+			const userCredential = await auth().signInWithCredential(
+				googleCredential
+			)
+			await createUser(userCredential.user)
+			await getUserCoins(userCredential.user.uid)
 		} catch (error) {
 			console.log(error)
 		}
