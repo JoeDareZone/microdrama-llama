@@ -1,3 +1,4 @@
+import { usePathStore } from '@/stores/usePathStore'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useVideoPlayer, VideoView } from 'expo-video'
 import React, { useEffect, useState } from 'react'
@@ -9,9 +10,13 @@ type Params = {
 
 export default function MovieScreen() {
 	const { id } = useLocalSearchParams<Params>()
+	const { addToPath } = usePathStore()
 	const router = useRouter()
-
 	const [showOptions, setShowOptions] = useState(false)
+
+	useEffect(() => {
+		if (id) addToPath(id)
+	}, [id])
 
 	// Video map — replace these with your actual URLs
 	const videoMap: Record<string, string> = {
@@ -59,20 +64,20 @@ export default function MovieScreen() {
 				{showOptions && (
 					<View className='absolute bottom-12 left-0 right-0 p-6 gap-x-10 w-full flex-row justify-center'>
 						<Pressable
-							className='bg-white py-10 px-16 rounded-2xl items-center'
+							className='bg-white py-10 px-10 rounded-2xl items-center justify-center'
 							onPress={() => handleChoice('2')}
 						>
 							<Text className='text-black text-lg font-semibold'>
-								Option A
+								Play Basketball
 							</Text>
 						</Pressable>
 
 						<Pressable
-							className='bg-white py-10 px-16 rounded-2xl items-center'
+							className='bg-white py-10 px-10 rounded-2xl items-center justify-center'
 							onPress={() => handleChoice('3')}
 						>
 							<Text className='text-black text-lg font-semibold'>
-								Option B
+								Walk in the park
 							</Text>
 						</Pressable>
 					</View>
