@@ -6,14 +6,27 @@ import 'react-native-reanimated'
 
 SplashScreen.preventAutoHideAsync()
 
+declare global {
+	var RNFB_SILENCE_MODULAR_DEPRECATION_WARNINGS: boolean
+}
+
 import SafeAreaWrapper from '@/components/SafeAreaWrapper'
-import { StatusBar } from 'react-native'
+import { LogBox, StatusBar } from 'react-native'
 import '../global.css'
 
 export default function RootLayout() {
 	const [loaded] = useFonts({
 		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
 	})
+
+	globalThis.RNFB_SILENCE_MODULAR_DEPRECATION_WARNINGS = true
+
+	LogBox.ignoreLogs([
+		'AudioSessionGetProperty',
+		'AVKit',
+		'VisionKitCore',
+		'TranslationUI',
+	])
 
 	useEffect(() => {
 		if (loaded) {
