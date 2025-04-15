@@ -12,7 +12,7 @@ export const storyMap: Record<string, StoryNode> = {
 		title: 'Working at home',
 		options: [
 			{ label: 'Play basketball', nextId: '2' },
-			{ label: 'Stay in bed', nextId: '3' },
+			{ label: 'Stay at home', nextId: '3' },
 		],
 	},
 	'2': {
@@ -61,6 +61,12 @@ export const storyMap: Record<string, StoryNode> = {
 		id: '7',
 		videoUrl: require('@/assets/videos/kiss.mp4'),
 		title: 'Kiss',
+		options: [],
+	},
+	'8': {
+		id: '8',
+		videoUrl: require('@/assets/videos/stay-at-home.mp4'),
+		title: 'Stay at home',
 		options: [],
 	},
 }
