@@ -1,5 +1,3 @@
-import { useAuth } from '@/hooks/useAuth'
-import { router } from 'expo-router'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
 export default function HomeScreen() {
@@ -13,18 +11,11 @@ export default function HomeScreen() {
 		'Documentaries',
 	]
 
-	const { user, signOut } = useAuth()
-
-	const handleSignOut = async () => {
-		await signOut()
-		router.replace('/welcome')
-	}
-
 	const movieData = [
 		{
 			id: 1,
 			title: 'Movie 1',
-			image: 'https://images.unsplash.com/photo-1571771045145-fbf3b6be3b68',
+			image: require('../../assets/images/girl2.png'),
 		},
 		{
 			id: 2,
@@ -67,9 +58,15 @@ export default function HomeScreen() {
 						className='mt-4'
 					>
 						{movieData.map(movie => (
-							<TouchableOpacity key={movie.id} className='mr-4'>
+							<TouchableOpacity
+								key={movie.id}
+								className='mr-4'
+								onPress={() => {
+									console.log('Movie pressed')
+								}}
+							>
 								<Image
-									source={{ uri: movie.image }}
+									source={movie.image}
 									className='w-40 h-60 rounded-md'
 								/>
 								<Text className='text-white text-sm mt-2'>
