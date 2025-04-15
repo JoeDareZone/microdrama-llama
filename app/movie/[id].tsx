@@ -6,6 +6,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useVideoPlayer, VideoView } from 'expo-video'
 import React, { useEffect, useState } from 'react'
 import { Pressable, Text, View } from 'react-native'
+import Animated, { FadeInDown, ZoomIn } from 'react-native-reanimated'
 import { getStoryNode } from '../stories/storyMap'
 type Params = { id: string }
 
@@ -15,6 +16,7 @@ export default function MovieScreen() {
 	const router = useRouter()
 	const [showOptions, setShowOptions] = useState(false)
 	const spendCoins = useCurrencyStore(state => state.spendCoins)
+	const addCoins = useCurrencyStore(state => state.addCoins)
 	const canAfford = (cost: number) =>
 		useCurrencyStore.getState().coins >= cost
 
@@ -35,6 +37,11 @@ export default function MovieScreen() {
 
 		setShowOptions(false)
 		router.push(`/movie/${nextId}`)
+	}
+
+	const handleEndMovie = () => {
+		addCoins(10)
+		router.push('/')
 	}
 
 	useEffect(() => {
@@ -85,15 +92,32 @@ export default function MovieScreen() {
 						))}
 					</View>
 				) : showOptions ? (
-					<View className='absolute bottom-12 left-0 right-0 p-6 gap-x-10 w-full justify-center'>
-						<Text className='text-white text-2xl font-bold text-center'>
-							The End
+					<View className='absolute bottom-12 left-0 right-0 p-6 w-full items-center justify-center'>
+						<Text className='text-white text-3xl font-bold mb-4'>
+							The End 🎬
 						</Text>
-						<Pressable
-							className='bg-white py-4 px-8 rounded-xl mt-4'
-							onPress={() => router.push('/')}
+
+						<Animated.View
+							entering={FadeInDown.duration(600)}
+							className='bg-yellow-400 rounded-2xl px-6 py-4 mb-6 flex-row items-center space-x-3'
 						>
-							<Text className='text-black text-center text-lg font-semibold'>
+							<Animated.View entering={ZoomIn.duration(400)}>
+								<IconSymbol
+									name='dollarsign.circle'
+									size={28}
+									color='#000'
+								/>
+							</Animated.View>
+							<Text className='text-black text-xl font-semibold'>
+								+10 Coins
+							</Text>
+						</Animated.View>
+
+						<Pressable
+							className='bg-white py-4 px-8 rounded-2xl shadow-lg'
+							onPress={handleEndMovie}
+						>
+							<Text className='text-black text-lg font-semibold'>
 								Start Over
 							</Text>
 						</Pressable>

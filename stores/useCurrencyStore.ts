@@ -8,7 +8,7 @@ type CurrencyStore = {
 }
 
 export const useCurrencyStore = create<CurrencyStore>(set => ({
-	coins: 100, // starting amount
+	coins: 100,
 
 	addCoins: amount => set(state => ({ coins: state.coins + amount })),
 
