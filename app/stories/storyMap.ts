@@ -9,20 +9,59 @@ export const storyMap: Record<string, StoryNode> = {
 	'1': {
 		id: '1',
 		videoUrl: require('@/assets/videos/work.mp4'),
-		title: 'Wake Up Scene',
+		title: 'Working at home',
 		options: [
-			{ label: 'Go outside', nextId: '2' },
+			{ label: 'Play basketball', nextId: '2' },
 			{ label: 'Stay in bed', nextId: '3' },
 		],
 	},
 	'2': {
 		id: '2',
 		videoUrl: require('@/assets/videos/basketball.mp4'),
-		title: 'Park Walk',
+		title: 'Basketball',
 		options: [
-			{ label: 'Feed the ducks', nextId: '4' },
-			{ label: 'Call a friend', nextId: '5' },
+			{ label: 'Go to the park', nextId: '3' },
+			{ label: 'Go for a drive', nextId: '6' },
 		],
+	},
+	'3': {
+		id: '3',
+		videoUrl: require('@/assets/videos/girl-park-meet.mp4'),
+		title: 'Girl Park Meet',
+		options: [
+			{ label: 'Chill in the park with her', nextId: '4' },
+			{ label: 'Watch the sunset with her', nextId: '5' },
+		],
+	},
+	'4': {
+		id: '4',
+		videoUrl: require('@/assets/videos/girl-park-chill.mp4'),
+		title: 'Girl Park Chill',
+		options: [
+			{ label: 'Drive home alone', nextId: '6' },
+			{ label: 'Take her home', nextId: '7' },
+		],
+	},
+	'5': {
+		id: '5',
+		videoUrl: require('@/assets/videos/girl-sunset-chill.mp4'),
+		title: 'Girl Sunset Chill',
+		options: [
+			{ label: 'Drive home alone', nextId: '6' },
+			{ label: 'Take her home', nextId: '7' },
+		],
+	},
+	'6': {
+		id: '6',
+		videoUrl: require('@/assets/videos/drive-home.mp4'),
+		title: 'Drive Home',
+		options: [],
+	},
+	'7': {
+		id: '7',
+		videoUrl: require('@/assets/videos/kiss.mp4'),
+		title: 'Kiss',
+		options: [],
 	},
 }
 
