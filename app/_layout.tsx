@@ -21,9 +21,7 @@ export default function RootLayout() {
 		}
 	}, [loaded])
 
-	if (!loaded) {
-		return null
-	}
+	if (!loaded) return null
 
 	return (
 		<SafeAreaWrapper>
@@ -36,6 +34,10 @@ export default function RootLayout() {
 				<Stack.Screen name='index' options={{ headerShown: false }} />
 				<Stack.Screen name='welcome' options={{ headerShown: false }} />
 				<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+				<Stack.Screen
+					name='movie/[id]'
+					options={{ headerShown: false }}
+				/>
 				<Stack.Screen name='+not-found' />
 			</Stack>
 		</SafeAreaWrapper>

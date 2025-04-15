@@ -1,3 +1,4 @@
+import CurrencyBar from '@/components/CurrencyBar'
 import { router } from 'expo-router'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
@@ -30,13 +31,13 @@ export default function HomeScreen() {
 		},
 	]
 
-	const handleMoviePress = (movieId: number) => {
-		console.log(`Movie ${movieId} pressed`)
+	const handleMoviePress = (movieId: number) =>
 		router.push(`/movie/${movieId}`)
-	}
 
 	return (
 		<ScrollView className='bg-black'>
+			<CurrencyBar />
+
 			{/* Top Banner */}
 			{/* <View className='relative h-56'>
 				<Image

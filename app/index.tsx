@@ -1,11 +1,18 @@
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'expo-router'
 import { useEffect } from 'react'
-import { ActivityIndicator, View } from 'react-native'
+import { ActivityIndicator, LogBox, View } from 'react-native'
 
 export default function Index() {
 	const router = useRouter()
 	const { user, loading } = useAuth()
+
+	LogBox.ignoreLogs([
+		'AudioSessionGetProperty',
+		'AVKit',
+		'VisionKitCore',
+		'TranslationUI',
+	])
 
 	useEffect(() => {
 		if (!loading) {

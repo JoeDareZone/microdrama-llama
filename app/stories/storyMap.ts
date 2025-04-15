@@ -2,7 +2,7 @@ export type StoryNode = {
 	id: string
 	videoUrl: string
 	title: string
-	options: { label: string; nextId: string }[]
+	options: { label: string; nextId: string; cost?: number }[]
 }
 
 export const storyMap: Record<string, StoryNode> = {
@@ -11,7 +11,7 @@ export const storyMap: Record<string, StoryNode> = {
 		videoUrl: require('@/assets/videos/work.mp4'),
 		title: 'Working at home',
 		options: [
-			{ label: 'Play basketball', nextId: '2' },
+			{ label: 'Play basketball', nextId: '2', cost: 10 },
 			{ label: 'Stay at home', nextId: '8' },
 		],
 	},
@@ -20,7 +20,7 @@ export const storyMap: Record<string, StoryNode> = {
 		videoUrl: require('@/assets/videos/basketball.mp4'),
 		title: 'Basketball',
 		options: [
-			{ label: 'Go to the park', nextId: '3' },
+			{ label: 'Go to the park', nextId: '3', cost: 10 },
 			{ label: 'Go for a drive', nextId: '6' },
 		],
 	},
@@ -29,8 +29,8 @@ export const storyMap: Record<string, StoryNode> = {
 		videoUrl: require('@/assets/videos/girl-park-meet.mp4'),
 		title: 'Girl Park Meet',
 		options: [
-			{ label: 'Chill in the park with her', nextId: '4' },
-			{ label: 'Watch the sunset with her', nextId: '5' },
+			{ label: 'Chill in the park with her', nextId: '4', cost: 10 },
+			{ label: 'Watch the sunset with her', nextId: '5', cost: 10 },
 		],
 	},
 	'4': {
@@ -39,7 +39,7 @@ export const storyMap: Record<string, StoryNode> = {
 		title: 'Girl Park Chill',
 		options: [
 			{ label: 'Drive home alone', nextId: '6' },
-			{ label: 'Take her home', nextId: '7' },
+			{ label: 'Take her home', nextId: '7', cost: 50 },
 		],
 	},
 	'5': {
@@ -48,7 +48,7 @@ export const storyMap: Record<string, StoryNode> = {
 		title: 'Girl Sunset Chill',
 		options: [
 			{ label: 'Drive home alone', nextId: '6' },
-			{ label: 'Take her home', nextId: '7' },
+			{ label: 'Take her home', nextId: '7', cost: 50 },
 		],
 	},
 	'6': {
@@ -71,6 +71,4 @@ export const storyMap: Record<string, StoryNode> = {
 	},
 }
 
-export const getStoryNode = (id: string): StoryNode => {
-	return storyMap[id]
-}
+export const getStoryNode = (id: string): StoryNode => storyMap[id]
