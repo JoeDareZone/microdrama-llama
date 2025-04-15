@@ -24,5 +24,8 @@ export const storyMap: Record<string, StoryNode> = {
 			{ label: 'Call a friend', nextId: '5' },
 		],
 	},
-	// etc.
+}
+
+export const getStoryNode = (id: string): StoryNode => {
+	return storyMap[id]
 }

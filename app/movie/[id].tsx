@@ -3,6 +3,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useVideoPlayer, VideoView } from 'expo-video'
 import React, { useEffect, useState } from 'react'
 import { Pressable, Text, View } from 'react-native'
+import { getStoryNode } from '../stories/storyMap'
 
 type Params = {
 	id: string
@@ -18,27 +19,15 @@ export default function MovieScreen() {
 		if (id) addToPath(id)
 	}, [id])
 
-	// Video map — replace these with your actual URLs
-	const videoMap: Record<string, string> = {
-		'1': 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-		'2': 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-		'3': 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
-	}
+	const storyNode = getStoryNode(id)
+	const player = useVideoPlayer(storyNode.videoUrl, player => player.play())
 
-	const currentVideo = videoMap[id] || videoMap['1']
-
-	const videoSource = require('../../assets/videos/work.mp4')
-
-	const player = useVideoPlayer(videoSource, player => {
-		player.play()
-	})
+  const handleChoice = (nextId: string) => router.push(`/movie/${nextId}`)
 
 	useEffect(() => {
 		if (!player) return
 
-		const onEnd = () => {
-			setShowOptions(true)
-		}
+		const onEnd = () => setShowOptions(true)
 
 		player.addListener('playToEnd', onEnd)
 
@@ -47,9 +36,7 @@ export default function MovieScreen() {
 		}
 	}, [player])
 
-	const handleChoice = (nextId: string) => {
-		router.push(`/movie/${nextId}`)
-	}
+
 
 	return (
 		<View className='flex-1 bg-black justify-center items-center'>
@@ -65,19 +52,19 @@ export default function MovieScreen() {
 					<View className='absolute bottom-12 left-0 right-0 p-6 gap-x-10 w-full flex-row justify-center'>
 						<Pressable
 							className='bg-white py-10 px-10 rounded-2xl items-center justify-center'
-							onPress={() => handleChoice('2')}
+							onPress={() => handleChoice(storyNode.options[0].nextId)}
 						>
 							<Text className='text-black text-lg font-semibold'>
-								Play Basketball
+								{storyNode.options[0].label}
 							</Text>
 						</Pressable>
 
 						<Pressable
 							className='bg-white py-10 px-10 rounded-2xl items-center justify-center'
-							onPress={() => handleChoice('3')}
+							onPress={() => handleChoice(storyNode.options[1].nextId)}
 						>
 							<Text className='text-black text-lg font-semibold'>
-								Walk in the park
+								{storyNode.options[1].label}
 							</Text>
 						</Pressable>
 					</View>
