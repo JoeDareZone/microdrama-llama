@@ -1,5 +1,6 @@
 import CurrencyBar from '@/components/CurrencyBar'
 import { IconSymbol } from '@/components/ui/IconSymbol'
+import { Colors } from '@/constants/Colors'
 import { useCurrencyStore } from '@/stores/useCurrencyStore'
 import { usePathStore } from '@/stores/usePathStore'
 import { useLocalSearchParams, useRouter } from 'expo-router'
@@ -86,7 +87,7 @@ export default function MovieScreen() {
 										<IconSymbol
 											name='dollarsign.circle'
 											size={24}
-											color='#FFD700'
+											color={Colors.gold}
 										/>
 									</View>
 								)}
@@ -101,13 +102,13 @@ export default function MovieScreen() {
 
 						<Animated.View
 							entering={FadeInDown.duration(600)}
-							className='bg-[#FFD700] rounded-xl px-4 py-2 mb-6 flex-row items-center space-x-2 gap-x-1'
+							className={`bg-[${Colors.gold}] rounded-xl px-4 py-2 mb-6 flex-row items-center space-x-2 gap-x-1`}
 						>
 							<Animated.View entering={ZoomIn.duration(400)}>
 								<IconSymbol
 									name='dollarsign.circle'
 									size={24}
-									color='#000'
+									color={Colors.black}
 								/>
 							</Animated.View>
 							<Text className='text-black text-base font-medium'>

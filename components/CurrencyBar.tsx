@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/Colors'
 import { useCurrencyStore } from '@/stores/useCurrencyStore'
 import { router } from 'expo-router'
 import React from 'react'
@@ -17,7 +18,7 @@ export default function CurrencyBar() {
 				<IconSymbol
 					name='dollarsign.circle'
 					size={24}
-					color='#FFD700'
+					color={Colors.gold}
 				/>
 				<Text className='text-white font-bold text-lg'>{coins}</Text>
 			</View>
