@@ -12,7 +12,7 @@ export const storyMap: Record<string, StoryNode> = {
 		title: 'Working at home',
 		options: [
 			{ label: 'Play basketball', nextId: '2' },
-			{ label: 'Stay at home', nextId: '3' },
+			{ label: 'Stay at home', nextId: '8' },
 		],
 	},
 	'2': {
