@@ -1,67 +1,39 @@
 // import { auth } from '@/app/firebase/config'
-import {
-	GoogleSignin,
-	isSuccessResponse,
-	User,
-} from '@react-native-google-signin/google-signin'
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { useEffect, useState } from 'react'
 
 export const useAuth = () => {
 	const [loading, setLoading] = useState(true)
-	// const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null)
-	const [user, setUser] = useState<User | null>(null)
+	const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null)
 
 	useEffect(() => {
 		GoogleSignin.configure({
-			//   webClientId: 'YOUR_WEB_CLIENT_ID', // replace this!
+			webClientId:
+				'1061764827233-q1vnh1sbmu1ce7cc95gsrkij445ovrdp.apps.googleusercontent.com',
 		})
-		// const unsubscribe = auth().onAuthStateChanged(user => {
-		// 	setUser(user)
-		// 	setLoading(false)
-		// })
 
-		// return unsubscribe
-		const checkSignedIn = async () => {
-			const currentUser = GoogleSignin.getCurrentUser()
-			if (currentUser) {
-				setUser(currentUser)
-				setLoading(false)
-			} else {
+		auth().onAuthStateChanged(userState => {
+			setUser(userState)
+
+			if (loading) {
 				setLoading(false)
 			}
-		}
-		checkSignedIn()
+		})
 	}, [])
 
 	const signIn = async () => {
 		try {
 			await GoogleSignin.hasPlayServices()
 			const response = await GoogleSignin.signIn()
-			if (isSuccessResponse(response)) {
-				setUser(response.data)
-			} else {
-				console.log('sign in was cancelled by user')
-				// sign in was cancelled by user
-			}
+			const googleCredential = auth.GoogleAuthProvider.credential(
+				response.data?.idToken || null
+			)
+			await auth().signInWithCredential(googleCredential)
 		} catch (error) {
 			console.log(error)
 		}
 	}
-
-	// const signIn = async () => {
-	// 	try {
-	// 		await GoogleSignin.hasPlayServices()
-	// 		const { data } = await GoogleSignin.signIn()
-	// 		// const googleCredential = auth.GoogleAuthProvider.credential(
-	// 		// 	data?.idToken || null
-	// 		// )
-	// 		// await auth().signInWithCredential(googleCredential)
-	// 		setUser(data)
-	// 		// setUser(auth().currentUser)
-	// 	} catch (error) {
-	// 		console.log(error)
-	// 	}
-	// }
 
 	const signOut = async () => {
 		try {
