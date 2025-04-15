@@ -3,6 +3,7 @@ export type StoryNode = {
 	videoUrl: string
 	title: string
 	options: { label: string; nextId: string; cost?: number }[]
+	isEnd?: boolean
 }
 
 export const storyMap: Record<string, StoryNode> = {
@@ -56,18 +57,21 @@ export const storyMap: Record<string, StoryNode> = {
 		videoUrl: require('@/assets/videos/drive-home.mp4'),
 		title: 'Drive Home',
 		options: [],
+		isEnd: true,
 	},
 	'7': {
 		id: '7',
 		videoUrl: require('@/assets/videos/kiss.mp4'),
 		title: 'Kiss',
 		options: [],
+		isEnd: true,
 	},
 	'8': {
 		id: '8',
 		videoUrl: require('@/assets/videos/stay-at-home.mp4'),
 		title: 'Stay at home',
 		options: [],
+		isEnd: true,
 	},
 }
 

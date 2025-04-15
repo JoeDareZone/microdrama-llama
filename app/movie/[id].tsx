@@ -39,14 +39,16 @@ export default function MovieScreen() {
 		router.push(`/movie/${nextId}`)
 	}
 
-	const handleEndMovie = () => {
-		addCoins(10)
-		router.push('/')
-	}
-
 	useEffect(() => {
 		if (!player) return
-		const onEnd = () => setShowOptions(true)
+
+		const onEnd = () => {
+			setShowOptions(true)
+			if (storyNode.isEnd) {
+				addCoins(10)
+			}
+		}
+
 		player.addListener('playToEnd', onEnd)
 
 		return () => player.removeListener('playToEnd', onEnd)
@@ -91,7 +93,7 @@ export default function MovieScreen() {
 							</Pressable>
 						))}
 					</View>
-				) : showOptions ? (
+				) : showOptions && storyNode.isEnd ? (
 					<View className='absolute bottom-12 left-0 right-0 p-6 w-full items-center justify-center'>
 						<Text className='text-white text-3xl font-bold mb-4'>
 							The End 🎬
@@ -99,23 +101,23 @@ export default function MovieScreen() {
 
 						<Animated.View
 							entering={FadeInDown.duration(600)}
-							className='bg-yellow-400 rounded-2xl px-6 py-4 mb-6 flex-row items-center space-x-3'
+							className='bg-[#FFD700] rounded-xl px-4 py-2 mb-6 flex-row items-center space-x-2 gap-x-1'
 						>
 							<Animated.View entering={ZoomIn.duration(400)}>
 								<IconSymbol
 									name='dollarsign.circle'
-									size={28}
+									size={24}
 									color='#000'
 								/>
 							</Animated.View>
-							<Text className='text-black text-xl font-semibold'>
+							<Text className='text-black text-base font-medium'>
 								+10 Coins
 							</Text>
 						</Animated.View>
 
 						<Pressable
-							className='bg-white py-4 px-8 rounded-2xl shadow-lg'
-							onPress={handleEndMovie}
+							className='bg-white py-4 px-20 rounded-2xl shadow-lg'
+							onPress={() => router.push('/')}
 						>
 							<Text className='text-black text-lg font-semibold'>
 								Start Over
