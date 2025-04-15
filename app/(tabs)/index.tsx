@@ -1,3 +1,4 @@
+import { router } from 'expo-router'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
 export default function HomeScreen() {
@@ -28,6 +29,11 @@ export default function HomeScreen() {
 			image: 'https://images.unsplash.com/photo-1516972810927-2dbd3e6e02c4',
 		},
 	]
+
+	const handleMoviePress = (movieId: number) => {
+		console.log(`Movie ${movieId} pressed`)
+		router.push(`/movie/${movieId}`)
+	}
 
 	return (
 		<ScrollView className='bg-black'>
@@ -61,9 +67,7 @@ export default function HomeScreen() {
 							<TouchableOpacity
 								key={movie.id}
 								className='mr-4'
-								onPress={() => {
-									console.log('Movie pressed')
-								}}
+								onPress={() => handleMoviePress(movie.id)}
 							>
 								<Image
 									source={movie.image}
