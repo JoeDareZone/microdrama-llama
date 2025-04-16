@@ -10,13 +10,8 @@ import {
 } from 'react-native'
 
 export default function HomeScreen() {
-	// Categories for movies
-	const categories = [
-		'Trending Now',
-		'Coming Soon', // Adding 'Coming Soon' as a category
-	]
+	const categories = ['Trending Now', 'Coming Soon']
 
-	// Movie data for trending, top picks, and action (you can add more for other categories)
 	const movieData = [
 		{
 			id: 1,
@@ -25,7 +20,6 @@ export default function HomeScreen() {
 		},
 	]
 
-	// Placeholder for coming soon movies
 	const comingSoonData = [
 		{
 			id: 2,
@@ -50,21 +44,22 @@ export default function HomeScreen() {
 	return (
 		<SafeAreaView className='flex-1 bg-black'>
 			<CurrencyBar />
-			<ScrollView className='bg-black'>
-				{/* Categories Section */}
+			<ScrollView className='bg-black py-4'>
+				<Text className='text-white text-3xl font-semibold mb-4 ml-4'>
+					Movies
+				</Text>
+
 				{categories.map((category, index) => (
-					<View key={index} className='mt-8 px-4'>
+					<View key={index} className='mt-4 ml-4'>
 						<Text className='text-white text-xl font-semibold'>
 							{category}
 						</Text>
 
-						{/* Movie Grid */}
 						<ScrollView
 							horizontal
 							showsHorizontalScrollIndicator={false}
 							className='mt-4'
 						>
-							{/* Conditional rendering for "Coming Soon" */}
 							{category === 'Coming Soon'
 								? comingSoonData.map(movie => (
 										<TouchableOpacity
