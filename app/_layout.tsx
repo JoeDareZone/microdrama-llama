@@ -10,6 +10,7 @@ declare global {
 	var RNFB_SILENCE_MODULAR_DEPRECATION_WARNINGS: boolean
 }
 
+import SafeAreaWrapper from '@/components/SafeAreaWrapper'
 import { LogBox, StatusBar } from 'react-native'
 import '../global.css'
 
@@ -36,13 +37,12 @@ export default function RootLayout() {
 	if (!loaded) return null
 
 	return (
-		// <SafeAreaWrapper>
-		<>
-			{/* <StatusBar
+		<SafeAreaWrapper>
+			<StatusBar
 				barStyle='light-content'
 				backgroundColor='black'
 				translucent={false}
-			/> */}
+			/>
 			<Stack>
 				<Stack.Screen name='index' options={{ headerShown: false }} />
 				<Stack.Screen name='welcome' options={{ headerShown: false }} />
@@ -53,7 +53,6 @@ export default function RootLayout() {
 				/>
 				<Stack.Screen name='+not-found' />
 			</Stack>
-		</>
-		// </SafeAreaWrapper>
+		</SafeAreaWrapper>
 	)
 }

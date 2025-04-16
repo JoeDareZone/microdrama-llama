@@ -1,12 +1,10 @@
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
 export type UserData = {
-	// email: string
-	// name: string
+	uid: string
+	createdAt: FirebaseFirestoreTypes.Timestamp
+	lastLogin: FirebaseFirestoreTypes.Timestamp
+	dailyRewardClaimed: boolean
 	coins: number
 	achievements: string[]
-	// lastLogin: FirebaseFirestoreTypes.Timestamp
-	// profilePicture: string
-	dailyRewardClaimed: boolean
-	createdAt: FirebaseFirestoreTypes.Timestamp
 }

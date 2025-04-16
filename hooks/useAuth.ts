@@ -5,7 +5,7 @@ import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { useEffect, useState } from 'react'
-import { createUser } from './useFirestore'
+import { createUser, updateUser } from './useFirestore'
 
 export const useAuth = () => {
 	const [loading, setLoading] = useState(true)
@@ -28,6 +28,10 @@ export const useAuth = () => {
 				if (!userDoc.exists) {
 					await createUser(userState)
 				} else {
+					await updateUser({
+						uid: userState.uid,
+						lastLogin: firestore.Timestamp.now(),
+					})
 					setUser(userDoc.data() as UserData)
 				}
 			}

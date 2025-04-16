@@ -1,3 +1,4 @@
+import { UserData } from '@/types/user'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 
@@ -21,4 +22,9 @@ export const getUser = async (user: FirebaseAuthTypes.User) => {
 	const userDoc = firestore().collection('users').doc(user.uid)
 	const docSnapshot = await userDoc.get()
 	return docSnapshot.data()
+}
+
+export const updateUser = async (user: Partial<UserData> & { uid: string }) => {
+	const userDoc = firestore().collection('users').doc(user.uid)
+	await userDoc.update(user)
 }
