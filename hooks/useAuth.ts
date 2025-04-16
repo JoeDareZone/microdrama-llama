@@ -1,13 +1,15 @@
 // import { auth } from '@/app/firebase/config'
 import { getUserCoins } from '@/services/currencyService'
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { UserData } from '@/types/user'
+import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { useEffect, useState } from 'react'
 import { createUser } from './useFirestore'
 
 export const useAuth = () => {
 	const [loading, setLoading] = useState(true)
-	const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null)
+	const [user, setUser] = useState<UserData | null>(null)
 
 	useEffect(() => {
 		GoogleSignin.configure({
@@ -15,12 +17,22 @@ export const useAuth = () => {
 				'1061764827233-q1vnh1sbmu1ce7cc95gsrkij445ovrdp.apps.googleusercontent.com',
 		})
 
-		const subscriber = auth().onAuthStateChanged(userState => {
-			setUser(userState)
+		const subscriber = auth().onAuthStateChanged(async userState => {
+			if (userState) {
+				const userRef = firestore()
+					.collection('users')
+					.doc(userState.uid)
 
-			if (loading) {
-				setLoading(false)
+				const userDoc = await userRef.get()
+
+				if (!userDoc.exists) {
+					await createUser(userState)
+				} else {
+					setUser(userDoc.data() as UserData)
+				}
 			}
+
+			setLoading(false)
 		})
 
 		return subscriber
@@ -36,7 +48,6 @@ export const useAuth = () => {
 			const userCredential = await auth().signInWithCredential(
 				googleCredential
 			)
-			await createUser(userCredential.user)
 			await getUserCoins(userCredential.user.uid)
 		} catch (error) {
 			console.log(error)

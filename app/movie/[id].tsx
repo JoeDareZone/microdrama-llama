@@ -21,7 +21,7 @@ export default function MovieScreen() {
 	const [showOptions, setShowOptions] = useState(false)
 	const canAfford = (cost: number) =>
 		useCurrencyStore.getState().coins >= cost
-	const user = useAuth()
+	const user = useAuth().user
 
 	useEffect(() => {
 		if (id) addToPath(id)
@@ -36,7 +36,7 @@ export default function MovieScreen() {
 			return
 		}
 
-		if (cost) spendUserCoins(user.user?.uid ?? '', cost)
+		if (cost) spendUserCoins(user?.uid ?? '', cost)
 
 		setShowOptions(false)
 		router.push(`/movie/${nextId}`)
@@ -48,7 +48,7 @@ export default function MovieScreen() {
 		const onEnd = () => {
 			setShowOptions(true)
 			if (storyNode.isEnd) {
-				addUserCoins(user.user?.uid ?? '', 10)
+				addUserCoins(user?.uid ?? '', 10)
 			}
 		}
 

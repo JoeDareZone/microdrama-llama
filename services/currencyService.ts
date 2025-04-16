@@ -1,7 +1,7 @@
 import firestore from '@react-native-firebase/firestore'
 import { useCurrencyStore } from '../stores/useCurrencyStore'
 
-const usersCollection = firestore().collection('Users')
+const usersCollection = firestore().collection('users')
 
 export const getUserCoins = async (uid: string) => {
 	const userDoc = await usersCollection.doc(uid).get()
@@ -34,4 +34,39 @@ export const spendUserCoins = async (uid: string, amount: number) => {
 export const resetUserCoins = async (uid: string) => {
 	useCurrencyStore.getState().setCoins(0)
 	await usersCollection.doc(uid).update({ coins: 0 })
+}
+
+export const handleDailyReward = async (
+	userId: string,
+	rewardAmount: number
+) => {
+	try {
+		const userRef = firestore().collection('users').doc(userId)
+		const userDoc = await userRef.get()
+
+		if (userDoc.exists) {
+			const userData = userDoc.data()
+			const lastLogin = userData?.lastLogin?.toDate()
+			const today = new Date()
+
+			// Check if the user has logged in today
+			if (
+				lastLogin?.getDate() === today.getDate() &&
+				lastLogin?.getMonth() === today.getMonth() &&
+				lastLogin?.getFullYear() === today.getFullYear()
+			) {
+				return { claimed: true }
+			}
+
+			await userRef.update({
+				coins: firestore.FieldValue.increment(rewardAmount),
+				lastLogin: firestore.FieldValue.serverTimestamp(),
+			})
+
+			return { claimed: false, coinsAdded: rewardAmount }
+		}
+	} catch (error) {
+		console.error('Error handling daily reward:', error)
+		return { claimed: false }
+	}
 }
