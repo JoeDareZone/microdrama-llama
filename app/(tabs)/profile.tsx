@@ -11,10 +11,13 @@ export default function ProfileScreen() {
 	}
 
 	return (
-		<SafeAreaView className='flex-1 bg-black mt-12'>
-			<View className='absolute top-4 right-4 z-10'>
-				<TouchableOpacity onPress={handleSignOut}>
-					<Text className='text-white text-lg font-semibold'>
+		<SafeAreaView className='flex-1 bg-black justify-center items-center'>
+			<View className='w-full px-6'>
+				<TouchableOpacity
+					onPress={handleSignOut}
+					className='bg-white p-4 rounded-lg shadow-lg'
+				>
+					<Text className='text-black text-2xl font-bold text-center'>
 						Sign Out
 					</Text>
 				</TouchableOpacity>

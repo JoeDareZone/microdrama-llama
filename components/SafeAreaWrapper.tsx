@@ -13,7 +13,8 @@ const SafeAreaWrapper: React.FC<SafeAreaWrapperProps> = ({ children }) => {
 const styles = StyleSheet.create({
 	safeArea: {
 		flex: 1,
-		paddingTop: Platform.OS === 'android' ? 25 : 0, // Adjust for status bar height on Android
+		backgroundColor: 'black',
+		paddingTop: Platform.OS === 'android' ? 25 : 0,
 	},
 })
 

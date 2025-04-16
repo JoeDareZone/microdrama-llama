@@ -2,26 +2,25 @@ import { useCurrencyStore } from '@/stores/useCurrencyStore'
 import { Colors } from '@/utils/constants'
 import { router } from 'expo-router'
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity } from 'react-native'
 import { IconSymbol } from './ui/IconSymbol'
 
 export default function CurrencyBar() {
 	const coins = useCurrencyStore(state => state.coins)
-	const spendCoins = useCurrencyStore(state => state.spendCoins)
 
 	return (
-		<TouchableOpacity
-			className='absolute top-0 right-0 flex-row mr-4 mt-4'
-			onPress={() => router.push('/profile')}
-		>
-			<View className='flex-row items-center bg-black/80 rounded-full border border-yellow-500'>
+		<SafeAreaView className='flex-row justify-end items-center absolute top-0 right-0 z-10'>
+			<TouchableOpacity
+				className='flex-row items-center bg-black/80 rounded-full border border-yellow-500 p-3'
+				onPress={() => router.push('/profile')}
+			>
 				<IconSymbol
 					name='dollarsign.circle'
 					size={24}
 					color={Colors.gold}
 				/>
 				<Text className='text-white font-bold text-lg'>{coins}</Text>
-			</View>
-		</TouchableOpacity>
+			</TouchableOpacity>
+		</SafeAreaView>
 	)
 }

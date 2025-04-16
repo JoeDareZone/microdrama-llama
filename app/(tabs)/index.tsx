@@ -1,6 +1,13 @@
 import CurrencyBar from '@/components/CurrencyBar'
 import { router } from 'expo-router'
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import {
+	Image,
+	SafeAreaView,
+	ScrollView,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native'
 
 export default function HomeScreen() {
 	const categories = [
@@ -35,11 +42,11 @@ export default function HomeScreen() {
 		router.push(`/movie/${movieId}`)
 
 	return (
-		<ScrollView className='bg-black'>
+		<SafeAreaView className='flex-1 bg-black'>
 			<CurrencyBar />
-
-			{/* Top Banner */}
-			{/* <View className='relative h-56'>
+			<ScrollView className='bg-black'>
+				{/* Top Banner */}
+				{/* <View className='relative h-56'>
 				<Image
 					source={{ uri: 'https://via.placeholder.com/500x300' }}
 					className='w-full h-full object-cover'
@@ -51,37 +58,38 @@ export default function HomeScreen() {
 				</View>
 			</View> */}
 
-			{/* Categories Section */}
-			{categories.map((category, index) => (
-				<View key={index} className='mt-8 px-4'>
-					<Text className='text-white text-xl font-semibold'>
-						{category}
-					</Text>
+				{/* Categories Section */}
+				{categories.map((category, index) => (
+					<View key={index} className='mt-8 px-4'>
+						<Text className='text-white text-xl font-semibold'>
+							{category}
+						</Text>
 
-					{/* Movie Grid */}
-					<ScrollView
-						horizontal
-						showsHorizontalScrollIndicator={false}
-						className='mt-4'
-					>
-						{movieData.map(movie => (
-							<TouchableOpacity
-								key={movie.id}
-								className='mr-4'
-								onPress={() => handleMoviePress(movie.id)}
-							>
-								<Image
-									source={movie.image}
-									className='w-40 h-60 rounded-md'
-								/>
-								<Text className='text-white text-sm mt-2'>
-									{movie.title}
-								</Text>
-							</TouchableOpacity>
-						))}
-					</ScrollView>
-				</View>
-			))}
-		</ScrollView>
+						{/* Movie Grid */}
+						<ScrollView
+							horizontal
+							showsHorizontalScrollIndicator={false}
+							className='mt-4'
+						>
+							{movieData.map(movie => (
+								<TouchableOpacity
+									key={movie.id}
+									className='mr-4'
+									onPress={() => handleMoviePress(movie.id)}
+								>
+									<Image
+										source={movie.image}
+										className='w-40 h-60 rounded-md'
+									/>
+									<Text className='text-white text-sm mt-2'>
+										{movie.title}
+									</Text>
+								</TouchableOpacity>
+							))}
+						</ScrollView>
+					</View>
+				))}
+			</ScrollView>
+		</SafeAreaView>
 	)
 }
