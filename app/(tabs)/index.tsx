@@ -10,31 +10,37 @@ import {
 } from 'react-native'
 
 export default function HomeScreen() {
+	// Categories for movies
 	const categories = [
 		'Trending Now',
-		'Top Picks for You',
-		'Action',
-		'Comedy',
-		'Romance',
-		'Horror',
-		'Documentaries',
+		'Coming Soon', // Adding 'Coming Soon' as a category
 	]
 
+	// Movie data for trending, top picks, and action (you can add more for other categories)
 	const movieData = [
 		{
 			id: 1,
-			title: 'Movie 1',
-			image: require('../../assets/images/girl2.png'),
+			title: 'Love in the Park',
+			image: require('../../assets/images/movie1.png'),
 		},
+	]
+
+	// Placeholder for coming soon movies
+	const comingSoonData = [
 		{
 			id: 2,
-			title: 'Movie 2',
-			image: 'https://images.unsplash.com/photo-1602107124398-d2f0ffdbbeea',
+			title: 'Movie 2 (Coming Soon)',
+			image: require('../../assets/images/movie2.png'),
 		},
 		{
 			id: 3,
-			title: 'Movie 3',
-			image: 'https://images.unsplash.com/photo-1516972810927-2dbd3e6e02c4',
+			title: 'Movie 3 (Coming Soon)',
+			image: require('../../assets/images/movie3.png'),
+		},
+		{
+			id: 4,
+			title: 'Movie 4 (Coming Soon)',
+			image: require('../../assets/images/movie4.png'),
 		},
 	]
 
@@ -45,19 +51,6 @@ export default function HomeScreen() {
 		<SafeAreaView className='flex-1 bg-black'>
 			<CurrencyBar />
 			<ScrollView className='bg-black'>
-				{/* Top Banner */}
-				{/* <View className='relative h-56'>
-				<Image
-					source={{ uri: 'https://via.placeholder.com/500x300' }}
-					className='w-full h-full object-cover'
-				/>
-				<View className='absolute bottom-4 left-4'>
-					<Text className='text-white text-3xl font-bold'>
-						Featured Movie
-					</Text>
-				</View>
-			</View> */}
-
 				{/* Categories Section */}
 				{categories.map((category, index) => (
 					<View key={index} className='mt-8 px-4'>
@@ -71,21 +64,42 @@ export default function HomeScreen() {
 							showsHorizontalScrollIndicator={false}
 							className='mt-4'
 						>
-							{movieData.map(movie => (
-								<TouchableOpacity
-									key={movie.id}
-									className='mr-4'
-									onPress={() => handleMoviePress(movie.id)}
-								>
-									<Image
-										source={movie.image}
-										className='w-40 h-60 rounded-md'
-									/>
-									<Text className='text-white text-sm mt-2'>
-										{movie.title}
-									</Text>
-								</TouchableOpacity>
-							))}
+							{/* Conditional rendering for "Coming Soon" */}
+							{category === 'Coming Soon'
+								? comingSoonData.map(movie => (
+										<TouchableOpacity
+											key={movie.id}
+											className='mr-4'
+											onPress={() =>
+												handleMoviePress(movie.id)
+											}
+										>
+											<Image
+												source={movie.image}
+												className='w-40 h-60 rounded-md'
+											/>
+											<Text className='text-white text-sm mt-2'>
+												{movie.title}
+											</Text>
+										</TouchableOpacity>
+								  ))
+								: movieData.map(movie => (
+										<TouchableOpacity
+											key={movie.id}
+											className='mr-4'
+											onPress={() =>
+												handleMoviePress(movie.id)
+											}
+										>
+											<Image
+												source={movie.image}
+												className='w-40 h-60 rounded-md'
+											/>
+											<Text className='text-white text-sm mt-2'>
+												{movie.title}
+											</Text>
+										</TouchableOpacity>
+								  ))}
 						</ScrollView>
 					</View>
 				))}
