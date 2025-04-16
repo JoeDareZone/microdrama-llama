@@ -1,4 +1,4 @@
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'expo-router'
 import { useEffect } from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'

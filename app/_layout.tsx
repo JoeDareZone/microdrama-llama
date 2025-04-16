@@ -11,6 +11,7 @@ declare global {
 }
 
 import SafeAreaWrapper from '@/components/SafeAreaWrapper'
+import { AuthProvider } from '@/context/AuthContext'
 import { LogBox, StatusBar } from 'react-native'
 import '../global.css'
 
@@ -38,21 +39,32 @@ export default function RootLayout() {
 
 	return (
 		<SafeAreaWrapper>
-			<StatusBar
-				barStyle='light-content'
-				backgroundColor='black'
-				translucent={false}
-			/>
-			<Stack>
-				<Stack.Screen name='index' options={{ headerShown: false }} />
-				<Stack.Screen name='welcome' options={{ headerShown: false }} />
-				<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-				<Stack.Screen
-					name='movie/[id]'
-					options={{ headerShown: false }}
+			<AuthProvider>
+				<StatusBar
+					barStyle='light-content'
+					backgroundColor='black'
+					translucent={false}
 				/>
-				<Stack.Screen name='+not-found' />
-			</Stack>
+				<Stack>
+					<Stack.Screen
+						name='index'
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name='welcome'
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name='(tabs)'
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name='movie/[id]'
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen name='+not-found' />
+				</Stack>
+			</AuthProvider>
 		</SafeAreaWrapper>
 	)
 }

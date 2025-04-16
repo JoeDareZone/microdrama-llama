@@ -37,16 +37,20 @@ export const resetUserCoins = async (uid: string) => {
 	await usersCollection.doc(uid).update({ coins: 0 })
 }
 
-export const handleDailyReward = async (
-	userId: string,
-	rewardAmount: number
-) => {
+export const claimReward = async (userId: string, rewardAmount: number) => {
+	await updateUser(userId, {
+		coins: firestore.FieldValue.increment(rewardAmount),
+		lastLogin: firestore.FieldValue.serverTimestamp(),
+	})
+	addUserCoins(userId, rewardAmount)
+}
+
+export const checkDailyReward = async (userId: string) => {
 	try {
 		const userDoc = await getUser(userId)
 
-		if (userDoc?.exists) {
-			const userData = userDoc.data()
-			const lastLogin = userData?.lastLogin?.toDate()
+		if (userDoc) {
+			const lastLogin = userDoc?.lastLogin?.toDate()
 			const today = new Date()
 
 			// Check if the user has logged in today
@@ -55,18 +59,13 @@ export const handleDailyReward = async (
 				lastLogin?.getMonth() === today.getMonth() &&
 				lastLogin?.getFullYear() === today.getFullYear()
 			) {
-				return { claimed: true }
+				await updateUser(userId, { dailyRewardClaimed: true })
+			} else {
+				return false
 			}
-
-			updateUser(userId, {
-				coins: firestore.FieldValue.increment(rewardAmount),
-				lastLogin: firestore.FieldValue.serverTimestamp(),
-			})
-
-			return { claimed: false, coinsAdded: rewardAmount }
 		}
 	} catch (error) {
 		console.error('Error handling daily reward:', error)
-		return { claimed: false }
+		return false
 	}
 }

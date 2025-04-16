@@ -1,5 +1,5 @@
-import { useAuth } from '@/hooks/useAuth'
-import { getUserCoins, handleDailyReward } from '@/services/currencyService'
+import { useAuth } from '@/context/AuthContext'
+import { checkDailyReward, getUserCoins } from '@/services/currencyService'
 import { useRouter } from 'expo-router'
 import { useEffect } from 'react'
 import { ActivityIndicator, View } from 'react-native'
@@ -12,7 +12,7 @@ export default function Index() {
 		if (!loading) {
 			if (user) {
 				getUserCoins(user.uid)
-				handleDailyReward(user?.uid ?? '', 10)
+				checkDailyReward(user.uid)
 				router.replace('/(tabs)')
 			} else {
 				router.replace('/welcome')

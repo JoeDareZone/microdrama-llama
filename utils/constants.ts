@@ -3,3 +3,5 @@ export const Colors = {
 	black: '#000',
 	white: '#fff',
 }
+
+export const DAILY_REWARD_COINS = 10
