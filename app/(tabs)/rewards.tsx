@@ -22,13 +22,15 @@ export default function RewardsTab() {
 
 	return (
 		<SafeAreaView className='flex-1 bg-black'>
-			<CurrencyBar />
-			<ScrollView className='bg-black px-6 py-4'>
-				<Text className='text-white text-3xl font-semibold mb-4'>
-					Rewards
-				</Text>
+			<ScrollView className='bg-black py-4'>
+				<View className='flex-row justify-between items-center pr-3'>
+					<Text className='text-white text-3xl font-semibold  ml-4'>
+						Rewards
+					</Text>
+					<CurrencyBar />
+				</View>
 
-				<View className='bg-white p-6 rounded-lg shadow-lg mb-6'>
+				<View className='bg-white p-6 rounded-lg shadow-lg mb-6 m-4'>
 					<Text className='text-lg text-gray-700 '>
 						Daily Reward:
 					</Text>
@@ -49,7 +51,7 @@ export default function RewardsTab() {
 					</TouchableOpacity>
 				</View>
 
-				<Text className='text-white text-xl font-semibold mb-2'>
+				<Text className='text-white text-xl font-semibold mb-2 ml-4'>
 					Achievements:
 				</Text>
 				{user?.achievements?.map(

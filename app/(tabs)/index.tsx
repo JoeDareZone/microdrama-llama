@@ -43,11 +43,13 @@ export default function HomeScreen() {
 
 	return (
 		<SafeAreaView className='flex-1 bg-black'>
-			<CurrencyBar />
 			<ScrollView className='bg-black py-4'>
-				<Text className='text-white text-3xl font-semibold mb-4 ml-4'>
-					Movies
-				</Text>
+				<View className='flex-row justify-between items-center pr-3'>
+					<Text className='text-white text-3xl font-semibold  ml-4'>
+						Movies
+					</Text>
+					<CurrencyBar />
+				</View>
 
 				{categories.map((category, index) => (
 					<View key={index} className='mt-4 ml-4'>
@@ -68,6 +70,7 @@ export default function HomeScreen() {
 											onPress={() =>
 												handleMoviePress(movie.id)
 											}
+											disabled
 										>
 											<Image
 												source={movie.image}
