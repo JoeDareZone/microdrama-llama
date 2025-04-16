@@ -1,3 +1,4 @@
+import { getUser, updateUser } from '@/hooks/useFirestore'
 import firestore from '@react-native-firebase/firestore'
 import { useCurrencyStore } from '../stores/useCurrencyStore'
 
@@ -41,10 +42,9 @@ export const handleDailyReward = async (
 	rewardAmount: number
 ) => {
 	try {
-		const userRef = firestore().collection('users').doc(userId)
-		const userDoc = await userRef.get()
+		const userDoc = await getUser(userId)
 
-		if (userDoc.exists) {
+		if (userDoc?.exists) {
 			const userData = userDoc.data()
 			const lastLogin = userData?.lastLogin?.toDate()
 			const today = new Date()
@@ -58,7 +58,7 @@ export const handleDailyReward = async (
 				return { claimed: true }
 			}
 
-			await userRef.update({
+			updateUser(userId, {
 				coins: firestore.FieldValue.increment(rewardAmount),
 				lastLogin: firestore.FieldValue.serverTimestamp(),
 			})

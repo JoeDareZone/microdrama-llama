@@ -7,6 +7,7 @@ export default function RewardsTab() {
 	const [dailyRewardClaimed, setDailyRewardClaimed] = useState(false)
 	const [rewardCoins, setRewardCoins] = useState(10)
 	const user = useAuth().user
+	
 
 	return (
 		<ScrollView className='bg-black px-6 py-4'>
